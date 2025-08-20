@@ -232,7 +232,7 @@ select {
     </div>
 
     <div class="stats">
-      <!-- Repeatable row template -->
+      
       <div class="row" data-stat="str">
         <div class="label">STRENGTH</div>
         <div class="rank-label">E</div>
@@ -347,7 +347,7 @@ const rankColors = {
   "B":"#3CDFFF","B+":"#3CDFFF","A":"#ffaa00","A+":"#ffaa00","AA":"#ffaa00","AA+":"#ffaa00",
   "S":"red","S+":"red","SS":"red","SS+":"red","SSS":"red","SSS+":"red","SR":"#FF6200","SR+":"#FF6200",
   "SSR":"#8b008b","SSR+":"#8b008b","UR":"#4300f9ff","UR+":"#4300f9ff",
-  "LR":"#ff3333ff","LR+":"#ff3333ff","MR":"#dd00ffff","MR+":"#dd00ffff"
+  "LR":"#ff3333ff","LR+":"#ff3333ff","MR":"#dd00ffff","MR+":"#dd00ffff",Unmeasurable:"#ff00ff"
 };
 
 function getRank(value){
@@ -381,7 +381,11 @@ function updateBar(stat){
     rankLabel.style.color = rankColors[rank] || "#fff";
     rankLabel.style.textShadow = `0 0 8px ${rankColors[rank] || "#38e8ff"}, 0 0 16px ${rankColors[rank] || "#38e8ff"}`;
   }
-
+if (rank === "Unmeasurable") {
+  rankLabel.style.display = "block";      // forces it on its own line
+  rankLabel.style.textAlign = "left";     // align to left
+  rankLabel.style.marginLeft = "0";       // no offset
+}
   bar.innerHTML="";
   const ticks = Math.min(Math.floor(value/5),20);
   for(let i=0;i<20;i++){
@@ -422,3 +426,4 @@ for(let s of ["str","agi","int","end","chrm"]) updateBar(s);
 </script>
 </body>
 </html>
+
