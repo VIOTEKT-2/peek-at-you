@@ -347,7 +347,7 @@ const rankColors = {
   "B":"#3CDFFF","B+":"#3CDFFF","A":"#ffaa00","A+":"#ffaa00","AA":"#ffaa00","AA+":"#ffaa00",
   "S":"red","S+":"red","SS":"red","SS+":"red","SSS":"red","SSS+":"red","SR":"#FF6200","SR+":"#FF6200",
   "SSR":"#8b008b","SSR+":"#8b008b","UR":"#4300f9ff","UR+":"#4300f9ff",
-  "LR":"#ff3333ff","LR+":"#ff3333ff","MR":"#dd00ffff","MR+":"#dd00ffff",Unmeasurable:"#ff00ff"
+  "LR":"#ff3333ff","LR+":"#ff3333ff","MR":"#dd00ffff","MR+":"#dd00ffff",Unmeasurable:"#8B0000"
 };
 
 function getRank(value){
@@ -374,7 +374,7 @@ function updateBar(stat){
   rankLabel.textContent = rank;
 
   // X–SX ranks styling
-  if(["X","X+","XX","XX+","XXX-","XXX","XXX+","EX","EX+","DX","DX+","CX","CX+","BX","BX+","AX","AX+","SX","SX+"].includes(rank)){
+  if(["X","X+","XX","XX+","XXX-","XXX","XXX+","EX","EX+","DX","DX+","CX","CX+","BX","BX+","AX","AX+","SX","SX+", "Unmeasurable"].includes(rank)){
     rankLabel.style.color = "#000";
     rankLabel.style.textShadow = `0 0 6px red, 0 0 12px red`;
   } else {
@@ -395,7 +395,7 @@ if (rank === "Unmeasurable") {
     tick.style.margin="0 1px";
     tick.style.boxSizing="border-box";
   if(i<ticks){
-   if (["X","X+","XX","XX+","XXX-","XXX","XXX+","EX","EX+","DX","DX+","CX","CX+","BX","BX+","AX","AX+","SX","SX+"].includes(rank)) {
+   if (["X","X+","XX","XX+","XXX-","XXX","XXX+","EX","EX+","DX","DX+","CX","CX+","BX","BX+","AX","AX+","SX","SX+", "Unmeasurable"].includes(rank)) {
   // Dark red fill with glowing red edges
   tick.style.backgroundColor = "#1a0000"; // very dark red base
   tick.style.boxShadow = "0 0 6px #ff0000, 0 0 12px #ff0000"; // outer glow red
@@ -426,4 +426,5 @@ for(let s of ["str","agi","int","end","chrm"]) updateBar(s);
 </script>
 </body>
 </html>
+
 
