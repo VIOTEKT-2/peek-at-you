@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Start Screen</title>
+  <style>
+    body {
+      background: #0a1833;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .start-container {
+      text-align: center;
+      background: #1565c0;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(21,101,192,0.25);
+      border: 2px solid #1976d2;
+    }
+    .start-container h1 {
+      font-size: 2em;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+    .choice-btn {
+      display: block;
+      width: 220px;
+      margin: 18px auto;
+      padding: 18px 0;
+      font-size: 1.3em;
+      font-weight: bold;
+      border-radius: 12px;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px rgba(21,101,192,0.18);
+    }
+    .choice-btn:hover {
+      background: #42a5f5;
+      color: #e3f2fd;
+    }
+  </style>
+</head>
+<body>
+  <div class="start-container">
+    <h1>Choose Your Mode</h1>
+    <button class="choice-btn" onclick="chooseMode('system')">System</button>
+    <button class="choice-btn" onclick="chooseMode('architect')">Architect</button>
+  </div>
+  <script>
+    function chooseMode(mode) {
+      // Correct logic and spelling for redirect
+      if (mode === 'system') {
+        window.location.href = 'coming soon.html';
+      } else if (mode === 'architect') {
+        window.location.href = 'architecht.html';
+      }
+    }
+  </script>
+</body>
+</html>
