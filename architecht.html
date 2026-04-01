@@ -282,7 +282,7 @@ select {
       </div>
 
       <div class="row" data-stat="agi">
-        <div class="label">AGILITY</div>
+        <div class="label">SPEED</div>
         <div class="rank-label">E</div>
         <div class="bar"></div>
         <div>
@@ -292,6 +292,20 @@ select {
             <option value="-10">-10</option><option value="-50">-50</option><option value="-100">-100</option>
           </select>
           <button onclick="incrementStat('agi')">Add</button>
+        </div>
+      </div>
+
+      <div class="row" data-stat="pot">
+        <div class="label">POTENTIAL</div>
+        <div class="rank-label">E</div>
+        <div class="bar"></div>
+        <div>
+          <select id="pot-select">
+            <option value="1">+1</option><option value="5">+5</option><option value="10">+10</option>
+            <option value="50">+50</option><option value="100">+100</option>
+            <option value="-10">-10</option><option value="-50">-50</option><option value="-100">-100</option>
+          </select>
+          <button onclick="incrementStat('pot')">Add</button>
         </div>
       </div>
 
@@ -322,20 +336,6 @@ select {
           <button onclick="incrementStat('end')">Add</button>
         </div>
       </div>
-
-      <div class="row" data-stat="chrm">
-        <div class="label">CHARM</div>
-        <div class="rank-label">E</div>
-        <div class="bar"></div>
-        <div>
-          <select id="chrm-select">
-            <option value="1">+1</option><option value="5">+5</option><option value="10">+10</option>
-            <option value="50">+50</option><option value="100">+100</option>
-            <option value="-10">-10</option><option value="-50">-50</option><option value="-100">-100</option>
-          </select>
-          <button onclick="incrementStat('chrm')">Add</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -359,8 +359,8 @@ function startSystem() {
 }
 
 // --- Stat Data ---
-const stats = { str: 0, agi: 0, int: 0, end: 0, chrm: 0 };
-const lastRanks = { str: "E", agi: "E", int: "E", end: "E", chrm: "E" };
+const stats = { str: 0, agi: 0, int: 0, end: 0, pot: 0 };
+const lastRanks = { str: "E", agi: "E", int: "E", end: "E", pot: "E" };
 
 // FIX 3: Removed stray comma before {name:"DX"} that crashed JS
 const rankList = [
@@ -374,8 +374,6 @@ const rankList = [
   { name: "B+",           min: 50   },
   { name: "A",            min: 60   },
   { name: "A+",           min: 70   },
-  { name: "AA",           min: 75   },
-  { name: "AA+",          min: 85   },
   { name: "S",            min: 90   },
   { name: "S+",           min: 100  },
   { name: "SS",           min: 105  },
@@ -409,7 +407,44 @@ const rankList = [
   { name: "XR",           min: 1025 },
   { name: "Unmeasurable", min: 1450 }
 ];
-
+const rankListpot = [
+  { name: "E",            min: 50    },
+  { name: "E+",           min: 100   },
+  { name: "D",            min: 150    },
+  { name: "D+",           min: 200   },
+  { name: "C",            min: 250   },
+  { name: "C+",           min: 300   },
+  { name: "B",            min: 350   },
+  { name: "B+",           min: 400   },
+  { name: "A",            min: 450   },
+  { name: "A+",           min: 500   },
+  { name: "S",            min: 550   },
+  { name: "S+",           min: 600   },
+  { name: "SS",           min: 650   },
+  { name: "SS+",          min: 700   },
+  { name: "SSS",          min: 750   },
+  { name: "SSS+",         min: 800   },
+  { name: "Unmeasurable", min: 850 }
+];
+const rankListint = [
+  { name: "E",            min: 50    },
+  { name: "E+",           min: 100   },
+  { name: "D",            min: 150    },
+  { name: "D+",           min: 200   },
+  { name: "C",            min: 250   },
+  { name: "C+",           min: 300   },
+  { name: "B",            min: 350   },
+  { name: "B+",           min: 400   },
+  { name: "A",            min: 450   },
+  { name: "A+",           min: 500   },
+  { name: "S",            min: 550   },
+  { name: "S+",           min: 600   },
+  { name: "SS",           min: 650   },
+  { name: "SS+",          min: 700   },
+  { name: "SSS",          min: 750   },
+  { name: "SSS+",         min: 800   },
+  { name: "Unmeasurable", min: 850 }
+];
 const rankColors = {
   "E":"#555","E+":"#555",
   "D":"#C4A484","D+":"#C4A484",
@@ -472,9 +507,9 @@ const innerGlowRanks = new Set([
   "X","XX","XXX","EX","DX","CX","BX","AX","SX","SSX","Unmeasurable"
 ]);
 
-function getRank(value) {
+function getRank(value,list) {
   let rank = "E";
-  for (let r of rankList) {
+  for (let r of list) {
     if (value >= r.min) rank = r.name;
   }
   return rank;
@@ -485,7 +520,9 @@ function updateBar(stat) {
   const bar = row.querySelector('.bar');
   const rankLabel = row.querySelector('.rank-label');
   const value = stats[stat];
-  const rank = getRank(value);
+  const rank = (stat === "pot") ? getRank(value, rankListpot) :
+               (stat === "int") ? getRank(value, rankListint) :
+                                  getRank(value, rankList);
 
   // --- Bar inner glow ---
 bar.classList.remove("inner-glow","inner-glow-b","inner-glow-c","inner-glow-d");
